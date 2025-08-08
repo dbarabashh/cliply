@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("POSTGRES_USER", "cliply") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "cliply_dev_password") %>
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+  port: <%= ENV.fetch("DATABASE_PORT", 5432) %>
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("POSTGRES_DB", "cliply_development") %>
+
+test:
+  <<: *default
+  database: cliply_test
+
+production:
+  <<: *default
+  database: cliply_production
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  host: <%= ENV["DATABASE_HOST"] %>
+  port: <%= ENV.fetch("DATABASE_PORT", 5432) %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  prepared_statements: true
